@@ -7,7 +7,7 @@ This is an example on how to use Ruby on Rails with Reactjs
     2.5.9
 
 * System requiriments
-    * Docker-compose 1.29.2 or supirior
+    * Docker-compose 1.29.2 or superior
 
 * Configuration
     * `docker-compse build`
