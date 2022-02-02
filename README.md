@@ -1,24 +1,22 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is an example on how to use Ruby on Rails with Reactjs
 
-Things you may want to cover:
 
 * Ruby version
+    2.5.9
 
-* System dependencies
+* System requiriments
+    * Docker-compose 1.29.2 or supirior
 
 * Configuration
+    * `docker-compse build`
 
-* Database creation
-
-* Database initialization
+* Ejecution
+    * `docker-compose up`
+    * to run any rails instruction `docker-compose run web rails  ...`
 
 * How to run the test suite
+    * `docker-compose run web rails  test`
 
-* Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
-
-* ...
