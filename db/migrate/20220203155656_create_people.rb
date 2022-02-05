@@ -16,7 +16,7 @@ class CreatePeople < ActiveRecord::Migration[5.2]
       t.timestamps
     end
 
-    create_table :people_location, id: false do |t|
+    create_table :locations_people, id: false do |t|
       t.belongs_to :people, index: true
       t.belongs_to :location, index: true
 
@@ -29,7 +29,7 @@ class CreatePeople < ActiveRecord::Migration[5.2]
       t.timestamps
     end
 
-    create_table :people_affilation, id: false do |t|
+    create_table :affilations_people, id: false do |t|
       t.belongs_to :people, index: true
       t.belongs_to :affilations, index: true
 
