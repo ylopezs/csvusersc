@@ -21,10 +21,28 @@ ActiveRecord::Schema.define(version: 2022_02_03_155656) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "affilations_people", id: false, force: :cascade do |t|
+    t.bigint "people_id"
+    t.bigint "affilations_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["affilations_id"], name: "index_affilations_people_on_affilations_id"
+    t.index ["people_id"], name: "index_affilations_people_on_people_id"
+  end
+
   create_table "locations", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "locations_people", id: false, force: :cascade do |t|
+    t.bigint "people_id"
+    t.bigint "location_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["location_id"], name: "index_locations_people_on_location_id"
+    t.index ["people_id"], name: "index_locations_people_on_people_id"
   end
 
   create_table "people", force: :cascade do |t|
@@ -35,24 +53,6 @@ ActiveRecord::Schema.define(version: 2022_02_03_155656) do
     t.string "vehicle"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "affilations_people", id: false, force: :cascade do |t|
-    t.bigint "people_id"
-    t.bigint "affilations_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["affilations_id"], name: "index_affilations_people_on_affilations_id"
-    t.index ["people_id"], name: "index_affilations_people_on_people_id"
-  end
-
-  create_table "locations_people", id: false, force: :cascade do |t|
-    t.bigint "people_id"
-    t.bigint "location_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["location_id"], name: "index_locations_people_on_location_id"
-    t.index ["people_id"], name: "index_locations_people_on_people_id"
   end
 
 end
