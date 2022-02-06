@@ -1,3 +1,3 @@
 class Affilation < ApplicationRecord
-    has_and_belongs_to_many: person
+    has_and_belongs_to_many :people
 end
