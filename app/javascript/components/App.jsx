@@ -9,13 +9,26 @@ import "antd/dist/antd.css";
 
 function App() {
 
-    const [ personList, setPersonList ] = useState([])
+    const [personList, setPersonList] = useState([])
 
-    const loadPeople = ()=>{
+    const loadPeople = () => {
         console.log("call load");
+        const url = "api/v1/people/index";
+        fetch(url)
+            .then((data) => {
+                if (data.ok) {
+                    return data.json();
+                }
+                throw new Error("Error finding the server");
+            })
+            .then((data)=>{
+                setPersonList = data.map((person)=>{
+                    
+                })
+            })
     }
 
-    const fetchPeople = ()=>{
+    const fetchPeople = () => {
         console.log("call fetch");
     }
 
