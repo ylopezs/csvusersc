@@ -15,19 +15,19 @@ ActiveRecord::Schema.define(version: 2022_02_03_155656) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "affilations", force: :cascade do |t|
+  create_table "affiliations", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "affilations_people", id: false, force: :cascade do |t|
+  create_table "affiliations_people", id: false, force: :cascade do |t|
     t.bigint "person_id"
-    t.bigint "affilation_id"
+    t.bigint "affiliation_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["affilation_id"], name: "index_affilations_people_on_affilation_id"
-    t.index ["person_id"], name: "index_affilations_people_on_person_id"
+    t.index ["affiliation_id"], name: "index_affiliations_people_on_affiliation_id"
+    t.index ["person_id"], name: "index_affiliations_people_on_person_id"
   end
 
   create_table "locations", force: :cascade do |t|

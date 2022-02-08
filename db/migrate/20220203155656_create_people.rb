@@ -23,15 +23,15 @@ class CreatePeople < ActiveRecord::Migration[5.2]
       t.timestamps
     end
 
-    create_table :affilations do |t|
+    create_table :affiliations do |t|
       t.string :name
 
       t.timestamps
     end
 
-    create_table :affilations_people, id: false do |t|
+    create_table :affiliations_people, id: false do |t|
       t.belongs_to :person, index: true
-      t.belongs_to :affilation, index: true
+      t.belongs_to :affiliation, index: true
 
       t.timestamps
     end
