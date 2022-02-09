@@ -4,6 +4,22 @@ class Person < ApplicationRecord
     validates :name, presence: true
     validates :species, presence: true
     validates :gender, presence: true
-    #validates :locations, presence: true
-    #validates :affilations, presence: true
+
+    def locations_json
+        {:locations => locations}.to_json    
+    end
+
+    def to_hash
+        { 
+            :id => id,
+            :key => id,
+            :name => name,
+            :locations => locations,
+            :species => species,
+            :gender => gender,
+            :affiliations => affiliations,
+            :weapon => weapon,
+            :vehicle => vehicle,     
+        }
+    end
 end
