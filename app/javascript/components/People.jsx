@@ -1,51 +1,9 @@
 import React from "react";
-import { Table } from 'antd';
 import qs from 'qs';
-
-const columns = [
-    {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        width: '20%',
-    },
-    {
-        title: 'Location',
-        dataIndex: 'location',
-        key: 'location',
-        width: '20%',
-    },
-    {
-        title: 'Species',
-        dataIndex: 'species',
-        key: 'species',
-        width: '10%',
-    },
-    {
-        title: 'Gender',
-        dataIndex: 'gender',
-        key: 'gender',
-        width: '8%',
-    },
-    {
-        title: 'Affiliations',
-        dataIndex: 'afiiliations',
-        key: 'affiliations',
-        width: '20%',
-    },
-    {
-        title: 'Weapon',
-        dataIndex: 'weapon',
-        key: 'weapon',
-        width: '10%',
-    },
-    {
-        title: 'Vehicle',
-        dataIndex: 'vehicle',
-        key: 'vehicle',
-        width: '12%',
-    },
-];
+import 'antd/dist/antd.css';
+import { Table, Input, Button, Space } from 'antd';
+import Highlighter from 'react-highlight-words';
+import { SearchOutlined } from '@ant-design/icons';
 
 const getRandomuserParams = params => ({
     results: params.pagination.pageSize,
@@ -61,6 +19,8 @@ class People extends React.Component {
             pageSize: 10,
         },
         loading: false,
+        searchText: '',
+        searchedColumn: ''
     };
 
     componentDidMount() {
@@ -109,8 +69,152 @@ class People extends React.Component {
             });
     };
 
+    getColumnSearchProps = dataIndex => ({
+        filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+            <div style={{ padding: 8 }}>
+                <Input
+                    ref={node => {
+                        this.searchInput = node;
+                    }}
+                    placeholder={`Search ${dataIndex}`}
+                    value={selectedKeys[0]}
+                    onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+                    onPressEnter={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
+                    style={{ marginBottom: 8, display: 'block' }}
+                />
+                <Space>
+                    <Button
+                        type="primary"
+                        onClick={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
+                        icon={<SearchOutlined />}
+                        size="small"
+                        style={{ width: 90 }}
+                    >
+                        Search
+                    </Button>
+                    <Button onClick={() => this.handleReset(clearFilters)} size="small" style={{ width: 90 }}>
+                        Reset
+                    </Button>
+                    <Button
+                        type="link"
+                        size="small"
+                        onClick={() => {
+                            confirm({ closeDropdown: false });
+                            this.setState({
+                                searchText: selectedKeys[0],
+                                searchedColumn: dataIndex,
+                            });
+                        }}
+                    >
+                        Filter
+                    </Button>
+                </Space>
+            </div>
+        ),
+        filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
+        onFilter: (value, record) =>
+            record[dataIndex]
+                ? record[dataIndex].toString().toLowerCase().includes(value.toLowerCase())
+                : '',
+        onFilterDropdownVisibleChange: visible => {
+            if (visible) {
+                setTimeout(() => this.searchInput.select(), 100);
+            }
+        },
+        render: text =>
+            this.state.searchedColumn === dataIndex ? (
+                <Highlighter
+                    highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+                    searchWords={[this.state.searchText]}
+                    autoEscape
+                    textToHighlight={text ? text.toString() : ''}
+                />
+            ) : (
+                text
+            ),
+    });
+
+    handleSearch = (selectedKeys, confirm, dataIndex) => {
+        confirm();
+        this.setState({
+            searchText: selectedKeys[0],
+            searchedColumn: dataIndex,
+        });
+    };
+
+    handleReset = clearFilters => {
+        clearFilters();
+        this.setState({ searchText: '' });
+    };
+
     render() {
         const { data, pagination, loading } = this.state;
+        const columns = [
+            {
+                title: 'Name',
+                dataIndex: 'name',
+                key: 'name',
+                width: '20%',
+                ...this.getColumnSearchProps('name'),
+                sorter: (a, b) => a.name.length - b.name.length,
+                sortDirections: ['descend', 'ascend'],
+            },
+            {
+                title: 'Location',
+                dataIndex: 'location',
+                key: 'location',
+                width: '20%',
+                ...this.getColumnSearchProps('location'),
+                sorter: (a, b) => a.location.length - b.location.length,
+                sortDirections: ['descend', 'ascend'],
+            },
+            {
+                title: 'Species',
+                dataIndex: 'species',
+                key: 'species',
+                width: '10%',
+                ...this.getColumnSearchProps('species'),
+                sorter: (a, b) => a.species.length - b.species.length,
+                sortDirections: ['descend', 'ascend'],
+            },
+            {
+                title: 'Gender',
+                dataIndex: 'gender',
+                key: 'gender',
+                width: '8%',
+                ...this.getColumnSearchProps('gender'),
+                sorter: (a, b) => a.gender.length - b.gender.length,
+                sortDirections: ['descend', 'ascend'],
+            },
+            {
+                title: 'Affiliations',
+                dataIndex: 'afiiliations',
+                key: 'affiliations',
+                width: '20%',
+                ...this.getColumnSearchProps('affiliations'),
+                sorter: (a, b) => a.affiliations.length - b.affiliations.length,
+                sortDirections: ['descend', 'ascend'],
+            },
+            {
+                title: 'Weapon',
+                dataIndex: 'weapon',
+                key: 'weapon',
+                width: '10%',
+                ...this.getColumnSearchProps('weapon'),
+                sorter: (a, b) => a.weapon.length - b.weapon.length,
+                sortDirections: ['descend', 'ascend'],
+            },
+            {
+                title: 'Vehicle',
+                dataIndex: 'vehicle',
+                key: 'vehicle',
+                width: '12%',
+                ...this.getColumnSearchProps('vehicle'),
+                sorter: (a, b) => a.vehicle.length - b.vehicle.length,
+                sortDirections: ['descend', 'ascend'],
+            },
+        ];
+
         return (
             <Table
                 columns={columns}

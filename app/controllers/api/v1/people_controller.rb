@@ -6,7 +6,7 @@ class Api::V1::PeopleController < ApplicationController
     #GET /people
     #GET /people.json
     def index
-        @people = Person.order(params[:order]).limit(10).offset(params[:offset])
+        @people = Person.order(params[:order]).limit(10).offset(params[:page])
         result = Array.new
         @people.each do |person|
             result.push(person.to_hash)
