@@ -4,16 +4,9 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./Header";
 import People from "./People";
 import Load from "./Load";
-import { useEffect, useState } from "react";
 import "antd/dist/antd.css";
 
 function App() {
-
-    const [personList, setPersonList] = useState([])
-
-    const fetchPeople = () => {
-        console.log("call fetch");
-    }
 
     const { Content, Footer } = Layout;
 
@@ -22,7 +15,7 @@ function App() {
             <Header />
             <Content style={{ padding: "0 50px" }}>
                 <div className="site-layout-content" style={{ margin: "100px auto" }}>
-
+                    <People />
                 </div>
                 <Load />
             </Content>
